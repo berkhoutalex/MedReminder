@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package medreminderproject;
 
 import javafx.application.*;
@@ -14,6 +9,8 @@ import javafx.event.*;
 import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
+import javafx.concurrent.Task;
+
 /**
  *
  * @author berkh
@@ -27,9 +24,59 @@ public class MedReminderProject extends Application {
     int start_time_minutes;
     int num_times_a_day;
   }
-  
-  static Controller control = null;
+
+  static final int MAIN_LOOP_FREQUENCY = 750; // How frequent the main loop will loop in milliseconds.
+  static Controller control = null; // We can use this to access all of the ui elements
   static ArrayList<Reminder> reminders = new ArrayList<Reminder>();
+  static ArrayList<Boolean> dialog_box_already_shown = new ArrayList<Boolean>();
+
+  public static void main_loop() {
+    for (int i = 0; i < reminders.size(); i++) {
+      while (i >= dialog_box_already_shown.size()) dialog_box_already_shown.add(false);
+      Reminder r = reminders.get(i);
+      Calendar cal = Calendar.getInstance();
+      if (r.start_time_hours == cal.get(Calendar.HOUR_OF_DAY) &&
+          r.start_time_minutes == cal.get(Calendar.MINUTE)) {
+        if (!dialog_box_already_shown.get(i)) {
+          //@NOTE: All of the code below in this block is just creating a dialog box. It's not really anything fancy:
+          Stage dialog_stage = new Stage();
+          dialog_stage.initModality(Modality.WINDOW_MODAL);
+
+          Label dialog_box_note = new Label(String.format("Please Take Medicine '%s'", r.medicine_name));
+          dialog_box_note.setAlignment(Pos.BASELINE_CENTER);
+
+          Button done_button = new Button("Done");
+          done_button.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                dialog_stage.close();
+              }
+            });
+          Button delay_button = new Button("Delay");
+          delay_button.setOnAction(new EventHandler<ActionEvent>() {
+              @Override
+              public void handle(ActionEvent event) {
+                dialog_stage.close();
+              }
+            });
+          HBox horizontal_box = new HBox();
+          horizontal_box.setAlignment(Pos.BASELINE_CENTER);
+          horizontal_box.setSpacing(50.0);
+          horizontal_box.getChildren().addAll(done_button, delay_button);
+
+          VBox vertical_box = new VBox();
+          vertical_box.setSpacing(50.0);
+          vertical_box.getChildren().addAll(dialog_box_note, horizontal_box);
+
+          dialog_stage.setScene(new Scene(vertical_box));
+          dialog_stage.show();
+          dialog_box_already_shown.set(i, true);
+        }
+      } else {
+        dialog_box_already_shown.set(i, false);
+      }
+    }
+  }
   
   public static void update_medication_info_label() {
     String text = "Reminders List:\n";
@@ -69,69 +116,25 @@ public class MedReminderProject extends Application {
     stage.setScene(scene);
     stage.show();
 
-    Thread time_loop_thread = new Thread() {
-        public void run() {
-          try { // Only doing this because java is forcing me to...
-            for (;;) {
-              //Calendar cal1 = Calendar.getInstance();
-              //System.out.printf("%d:%d\n", cal1.get(Calendar.HOUR_OF_DAY), cal1.get(Calendar.MINUTE));
-              Thread.sleep(500);
-              for (int i = 0; i < reminders.size(); i++) {
-                Reminder r = reminders.get(i);
-                Calendar cal = Calendar.getInstance();
-                if (r.start_time_hours == cal.get(Calendar.HOUR_OF_DAY) &&
-                    r.start_time_minutes == cal.get(Calendar.MINUTE)) {
-                  //
-                  // @BUG: This dialog box code won't run because this happens in a thread
-                  // that isn't the main thread. I'm not sure how to get around it...
-                  // it's kind of dumb.
-                  //
-                  Stage dialog_stage = new Stage();
-                  dialog_stage.initModality(Modality.WINDOW_MODAL);
-
-                  Label dialog_box_note = new Label(String.format("Please Take Medicine '%s'", r.medicine_name));
-                  dialog_box_note.setAlignment(Pos.BASELINE_CENTER);
-
-                  Button done_button = new Button("Done");
-                  done_button.setOnAction(new EventHandler<ActionEvent>() {
-                      @Override
-                      public void handle(ActionEvent event) {
-                        dialog_stage.close();
-                      }
-                    });
-                  Button delay_button = new Button("Delay");
-                  delay_button.setOnAction(new EventHandler<ActionEvent>() {
-                      @Override
-                      public void handle(ActionEvent event) {
-                        dialog_stage.close();
-                      }
-                    });
-                  HBox horizontal_box = new HBox();
-                  horizontal_box.setAlignment(Pos.BASELINE_CENTER);
-                  horizontal_box.setSpacing(50.0);
-                  horizontal_box.getChildren().addAll(done_button, delay_button);
-
-                  VBox vertical_box = new VBox();
-                  vertical_box.setSpacing(50.0);
-                  vertical_box.getChildren().addAll(dialog_box_note, horizontal_box);
-
-                  dialog_stage.setScene(new Scene(vertical_box));
-                  dialog_stage.show();
-                }
-              }
-            }
-          } catch (Exception e) { System.out.println(e.getMessage()); }
+    //@NOTE: All this thread junk below is just a hack so that I could get a loop that would continuously run alongside the application (since we need it for checking the time, etc.):
+    Task main_loop_task = new Task<Void>() {
+        @Override
+        public Void call() throws Exception {
+          for (;;) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {main_loop();}
+              });
+            Thread.sleep(MAIN_LOOP_FREQUENCY);
+          }
         }
       };
-    time_loop_thread.setDaemon(true); // Makes the thread close when the program gets closed
-    time_loop_thread.start();
+    Thread main_loop_thread = new Thread(main_loop_task);
+    main_loop_thread.setDaemon(true); // Makes the thread close when the program gets closed
+    main_loop_thread.start();
   }
     
-  /**
-   * @param args the command line arguments
-   */
   public static void main(String[] args) {
     launch(args);
   }
-    
 }
