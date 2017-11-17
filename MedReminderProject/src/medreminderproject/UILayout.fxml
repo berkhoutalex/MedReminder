@@ -7,13 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="938.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
    <children>
       <SplitPane dividerPositions="0.29797979797979796" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="add_reminder_button" layoutX="33.0" layoutY="800.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="255.0" text="Add Reminder">
+                  <Button fx:id="add_reminder_button" layoutX="33.0" layoutY="600.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="255.0" text="Add Reminder">
                      <font>
                         <Font size="24.0" />
                      </font>
