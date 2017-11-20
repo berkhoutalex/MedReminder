@@ -10,25 +10,44 @@ import java.util.*;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
 import javafx.concurrent.Task;
-
+import java.nio.file.*;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 /**
  *
  * @author berkh
  */
 public class MedReminderProject extends Application {
-  class Reminder {
-    String medicine_name;
-    int interval_hours;
-    int interval_minutes;
-    int start_time_hours;
-    int start_time_minutes;
-    int num_times_a_day;
-  }
 
   static final int MAIN_LOOP_FREQUENCY = 750; // How frequent the main loop will loop in milliseconds.
+  static final String REMINDERS_SAVE_FILENAME = "reminders.bin";
   static Controller control = null; // We can use this to access all of the ui elements
   static ArrayList<Reminder> reminders = new ArrayList<Reminder>();
   static ArrayList<Boolean> dialog_box_already_shown = new ArrayList<Boolean>();
+
+  public static void save_reminders() {
+    try {
+      FileOutputStream file_output_stream = new FileOutputStream(REMINDERS_SAVE_FILENAME);
+      ObjectOutputStream output_stream = new ObjectOutputStream(file_output_stream);
+      output_stream.writeObject(reminders);
+      output_stream.flush();
+      output_stream.close();
+      file_output_stream.close();
+    } catch (Exception e) {e.printStackTrace();}
+  }
+  @SuppressWarnings("unchecked") // This is just to allow me to cast the object to an ArrayList<Reminder>
+  public static boolean load_reminders() {
+    File file = new File(REMINDERS_SAVE_FILENAME);
+    if (!file.exists() || file.isDirectory()) return false;
+    try {
+      FileInputStream file_input_stream = new FileInputStream(REMINDERS_SAVE_FILENAME);
+      ObjectInputStream object_input_stream = new ObjectInputStream(file_input_stream);
+      reminders = (ArrayList<Reminder>)object_input_stream.readObject();
+      object_input_stream.close();
+      file_input_stream.close();
+    } catch (Exception e) {}
+    return true;
+  }
 
   public static void main_loop() {
     for (int i = 0; i < reminders.size(); i++) {
@@ -108,9 +127,11 @@ public class MedReminderProject extends Application {
           
           reminders.add(r);
           update_medication_info_label();
+          save_reminders();
         }
         });
 
+    load_reminders();
     update_medication_info_label();
     stage.setTitle("Medication Reminder");
     stage.setScene(scene);
