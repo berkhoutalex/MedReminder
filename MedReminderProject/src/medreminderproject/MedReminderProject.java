@@ -24,7 +24,6 @@ public class MedReminderProject extends Application {
   static Controller control = null; // We can use this to access all of the ui elements
   static ArrayList<Reminder> reminders = new ArrayList<Reminder>();
   static ArrayList<Boolean> dialog_box_already_shown = new ArrayList<Boolean>();
-
   public static void save_reminders() {
     try {
       FileOutputStream file_output_stream = new FileOutputStream(REMINDERS_SAVE_FILENAME);
@@ -56,7 +55,9 @@ public class MedReminderProject extends Application {
       Calendar cal = Calendar.getInstance();
       if (r.start_time_hours == cal.get(Calendar.HOUR_OF_DAY) &&
           r.start_time_minutes == cal.get(Calendar.MINUTE)) {
+     
         if (!dialog_box_already_shown.get(i)) {
+            new Alarm();
           //@NOTE: All of the code below in this block is just creating a dialog box. It's not really anything fancy:
           Stage dialog_stage = new Stage();
           dialog_stage.initModality(Modality.WINDOW_MODAL);
@@ -69,12 +70,14 @@ public class MedReminderProject extends Application {
               @Override
               public void handle(ActionEvent event) {
                 dialog_stage.close();
+          
               }
             });
           Button delay_button = new Button("Delay");
           delay_button.setOnAction(new EventHandler<ActionEvent>() {
               @Override
               public void handle(ActionEvent event) {
+                 
                 dialog_stage.close();
               }
             });
@@ -89,7 +92,9 @@ public class MedReminderProject extends Application {
 
           dialog_stage.setScene(new Scene(vertical_box));
           dialog_stage.show();
+          
           dialog_box_already_shown.set(i, true);
+          
         }
       } else {
         dialog_box_already_shown.set(i, false);
