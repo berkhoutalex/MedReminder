@@ -12,13 +12,14 @@ import javafx.scene.layout.*;
 import javafx.concurrent.Task;
 import java.nio.file.*;
 import java.io.*;
+
 import java.nio.charset.StandardCharsets;
 /**
  *
  * @author berkh
  */
 public class MedReminderProject extends Application {
-
+  static Alarm a;
   static final int MAIN_LOOP_FREQUENCY = 750; // How frequent the main loop will loop in milliseconds.
   static final String REMINDERS_SAVE_FILENAME = "reminders.bin";
   static Controller control = null; // We can use this to access all of the ui elements
@@ -57,7 +58,7 @@ public class MedReminderProject extends Application {
           r.start_time_minutes == cal.get(Calendar.MINUTE)) {
      
         if (!dialog_box_already_shown.get(i)) {
-            new Alarm();
+            Alarm a = new Alarm();
           //@NOTE: All of the code below in this block is just creating a dialog box. It's not really anything fancy:
           Stage dialog_stage = new Stage();
           dialog_stage.initModality(Modality.WINDOW_MODAL);
@@ -70,15 +71,15 @@ public class MedReminderProject extends Application {
               @Override
               public void handle(ActionEvent event) {
                 dialog_stage.close();
-          
+                a.alarmStop();
               }
             });
           Button delay_button = new Button("Delay");
           delay_button.setOnAction(new EventHandler<ActionEvent>() {
               @Override
-              public void handle(ActionEvent event) {
-                 
+              public void handle(ActionEvent event) {  
                 dialog_stage.close();
+                a.alarmStop();
               }
             });
           HBox horizontal_box = new HBox();

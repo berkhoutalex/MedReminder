@@ -27,12 +27,16 @@ public class Alarm {
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
             Clip clip = AudioSystem.getClip();
             clip.open(audioIn);
-            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
             Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
         }
         
 }
+    public void alarmStop(){
+        if(clip.isRunning())
+            clip.stop();
+    }
    
    
 }
