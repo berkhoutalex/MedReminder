@@ -20,23 +20,20 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  * @author berkh
  */
 public class Alarm {
-    Clip clip;
-    Alarm(){
-        try {
-            File soundFile = new File("ding.wav");
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioIn);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
-            Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-}
-    public void alarmStop(){
-        if(clip.isRunning())
-            clip.stop();
+  public Clip clip;
+  Alarm(){
+    try {
+      File soundFile = new File("ding.wav");
+      AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+      clip = AudioSystem.getClip();
+      clip.open(audioIn);
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
+    } catch (LineUnavailableException | IOException | UnsupportedAudioFileException ex) {
+      Logger.getLogger(Alarm.class.getName()).log(Level.SEVERE, null, ex);
     }
-   
-   
+        
+  }
+  public void alarmStop(){
+    if (clip.isRunning()) clip.stop();
+  }
 }

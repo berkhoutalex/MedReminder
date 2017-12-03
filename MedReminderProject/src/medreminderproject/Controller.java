@@ -30,6 +30,9 @@ public class Controller implements Initializable {
   @FXML public TextField medication_name_field;
   @FXML public Button add_reminder_button;
   @FXML public Label medication_info_label;
+  @FXML public CheckBox start_time_pm_checkbox;
+  @FXML public Label medication_log_label;
+  @FXML public Button remove_reminder_by_name_button;
   
   @Override
   public void initialize(URL url, ResourceBundle rb) {} 

@@ -1,9 +1,2 @@
 --------------TODOS--------------------
--Make the delay button actually do something. (We'll probably create a "temporary" reminder in the reminders list (one that starts 5 minutes later), that'll get deleted after it goes off)
--Find a way to constrict time inputs to be valid (for example don't allow the user to type 'dog' in for the start time, etc.)
--Log when the medication has been taken
--Create a ui for the medication logging.
--Make it so that the alarm actually goes off by the intervals that the user specifies (right now it'll only go off at the start time).
--Have the alarm make sounds.
--Make the dialog box look less crappy.
 -Clean up the current ui.

@@ -8,36 +8,43 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
-   <children>
-      <SplitPane dividerPositions="0.29797979797979796" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <Button fx:id="add_reminder_button" layoutX="33.0" layoutY="600.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="255.0" text="Add Reminder">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <TextField fx:id="start_time_hours_field" layoutX="10.0" layoutY="350.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-                  <TextField fx:id="interval_hours_field" layoutX="10.0" layoutY="500.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-                  <TextField fx:id="interval_minutes_field" layoutX="175.0" layoutY="500.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
-                  <TextField fx:id="start_time_minutes_field" layoutX="175.0" layoutY="350.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
-                  <TextField fx:id="medication_name_field" layoutX="28.0" layoutY="95.0" prefHeight="65.0" prefWidth="286.0" promptText="Name of Medicine" text="" />
-                  <Label layoutX="20.0" layoutY="293.0" text="Set Start Time:" />
-                  <Label layoutX="20.0" layoutY="446.0" text="Set Interval:" />
-                  <TextField fx:id="num_times_a_day_field" layoutX="38.0" layoutY="179.0" prefHeight="65.0" prefWidth="255.0" promptText="Number of Times a Day" text="" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-               <children>
-                  <FlowPane prefHeight="718.0" prefWidth="749.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label fx:id="medication_info_label" prefHeight="936.0" prefWidth="778.0" text="Sample Medication at Sample Time" translateY="-400.0" />
-                     </children>
-                  </FlowPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
-   </children>
+  <children>
+    <SplitPane dividerPositions="0.3, 0.68" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <Button fx:id="add_reminder_button" layoutX="33.0" layoutY="600.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="255.0" text="Add Reminder">
+              <font>
+                <Font size="24.0" />
+              </font>
+            </Button>
+	    <Button fx:id="remove_reminder_by_name_button" layoutX="33.0" layoutY="690.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Remove Reminder By Name">
+              <font>
+                <Font size="10.0" />
+              </font>
+            </Button>
+            <TextField fx:id="start_time_hours_field" layoutX="10.0" layoutY="350.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
+            <TextField fx:id="interval_hours_field" layoutX="10.0" layoutY="500.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
+            <TextField fx:id="interval_minutes_field" layoutX="175.0" layoutY="500.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
+            <TextField fx:id="start_time_minutes_field" layoutX="175.0" layoutY="350.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
+            <TextField fx:id="medication_name_field" layoutX="28.0" layoutY="95.0" prefHeight="65.0" prefWidth="286.0" promptText="Name of Medicine" text="" />
+            <Label layoutX="20.0" layoutY="293.0" text="Set Start Time:" />
+            <Label layoutX="20.0" layoutY="446.0" text="Set Interval:" />
+            <TextField fx:id="num_times_a_day_field" layoutX="38.0" layoutY="179.0" prefHeight="65.0" prefWidth="255.0" promptText="Number of Times a Day" text="" />
+	    <CheckBox fx:id="start_time_pm_checkbox" layoutX="10.0" layoutY="420.0" text="PM"/>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <children>
+            <Label fx:id="medication_info_label" prefHeight="720.0" prefWidth="389.0" text="Sample Medication at Sample Time" />
+          </children>
+        </AnchorPane>
+	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
+	  <children>
+	    <Label fx:id="medication_log_label" prefHeight="720.0" prefWidth="389.0"/>
+	  </children>
+	</AnchorPane>
+      </items>
+    </SplitPane>
+  </children>
 </AnchorPane>
