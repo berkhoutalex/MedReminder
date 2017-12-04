@@ -167,7 +167,7 @@ public class MedReminderProject extends Application {
     String text = "Medication Log:\n";
     for (int i = 0; i < medication_log.size(); i++) {
       Medication_Log_Entry e = medication_log.get(i);
-      text += String.format("'%s' was taken at %02d:%02d on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
+      text += String.format("'%s' was taken at  on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
     }
     control.medication_log_label.setText(text);
   }
@@ -175,7 +175,7 @@ public class MedReminderProject extends Application {
     String text = "Reminders List:\n";
     for (int i = 0; i < reminders.size(); i++) {
       Reminder r = reminders.get(i);
-      text += String.format("Name: %s, Interval Hours: %d, Interval Minutes: %d, Start Time Hours: %d, Start Time Minutes: %d, Number Of Times a Day: %d\n", r.medicine_name, r.interval_hours, r.interval_minutes, r.start_time_hours, r.start_time_minutes, r.num_times_a_day);
+      text += String.format("%s to be taken every %02d:%02d starting at %02d:%02d, %d times daily\n", r.medicine_name, r.interval_hours, r.interval_minutes, r.start_time_hours, r.start_time_minutes, r.num_times_a_day);
     }
     control.medication_info_label.setText(text);
   }

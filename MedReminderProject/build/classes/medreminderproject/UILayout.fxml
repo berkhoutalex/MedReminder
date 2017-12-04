@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1550.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
   <children>
-    <SplitPane dividerPositions="0.3, 0.68" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane dividerPositions="0.2280361757105943, 0.6098191214470284" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
@@ -31,18 +31,25 @@
             <Label layoutX="20.0" layoutY="293.0" text="Set Start Time:" />
             <Label layoutX="20.0" layoutY="446.0" text="Set Interval:" />
             <TextField fx:id="num_times_a_day_field" layoutX="38.0" layoutY="179.0" prefHeight="65.0" prefWidth="255.0" promptText="Number of Times a Day" text="" />
-	    <CheckBox fx:id="start_time_pm_checkbox" layoutX="10.0" layoutY="420.0" text="PM"/>
+	    <CheckBox fx:id="start_time_pm_checkbox" layoutX="10.0" layoutY="420.0" text="PM" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <Label fx:id="medication_info_label" prefHeight="720.0" prefWidth="389.0" text="Sample Medication at Sample Time" />
+            <Label fx:id="medication_info_label" layoutX="14.0" layoutY="-332.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time">
+                     <font>
+                        <Font size="18.0" />
+                     </font></Label>
           </children>
         </AnchorPane>
 	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
-	  <children>
-	    <Label fx:id="medication_log_label" prefHeight="720.0" prefWidth="389.0"/>
-	  </children>
+               <children>
+            	    <Label fx:id="medication_log_label" layoutY="-324.0" prefHeight="718.0" prefWidth="596.0">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
 	</AnchorPane>
       </items>
     </SplitPane>
