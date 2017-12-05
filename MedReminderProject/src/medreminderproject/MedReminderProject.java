@@ -167,7 +167,7 @@ public class MedReminderProject extends Application {
     String text = "Medication Log:\n";
     for (int i = 0; i < medication_log.size(); i++) {
       Medication_Log_Entry e = medication_log.get(i);
-      text += String.format("'%s' was taken at  on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
+      text += String.format("'%s' was taken at %02d:%02d on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
     }
     control.medication_log_label.setText(text);
   }
