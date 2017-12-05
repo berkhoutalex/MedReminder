@@ -24,19 +24,19 @@
               </font>
             </Button>
             <TextField fx:id="start_time_hours_field" layoutX="10.0" layoutY="350.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-            <TextField fx:id="interval_hours_field" layoutX="10.0" layoutY="500.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-            <TextField fx:id="interval_minutes_field" layoutX="175.0" layoutY="500.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
+            <TextField fx:id="interval_hours_field" layoutX="10.0" layoutY="513.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
+            <TextField fx:id="interval_minutes_field" layoutX="175.0" layoutY="513.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
             <TextField fx:id="start_time_minutes_field" layoutX="175.0" layoutY="350.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
             <TextField fx:id="medication_name_field" layoutX="28.0" layoutY="95.0" prefHeight="65.0" prefWidth="286.0" promptText="Name of Medicine" text="" />
             <Label layoutX="20.0" layoutY="293.0" text="Set Start Time:" />
-            <Label layoutX="20.0" layoutY="446.0" text="Set Interval:" />
+            <Label layoutX="14.0" layoutY="465.0" text="Set Interval:" />
             <TextField fx:id="num_times_a_day_field" layoutX="38.0" layoutY="179.0" prefHeight="65.0" prefWidth="255.0" promptText="Number of Times a Day" text="" />
 	    <CheckBox fx:id="start_time_pm_checkbox" layoutX="10.0" layoutY="420.0" text="PM" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <Label fx:id="medication_info_label" layoutX="14.0" layoutY="-332.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time">
+            <Label fx:id="medication_info_label" alignment="TOP_CENTER" layoutX="-3.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
@@ -44,7 +44,7 @@
         </AnchorPane>
 	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
                <children>
-            	    <Label fx:id="medication_log_label" layoutY="-324.0" prefHeight="718.0" prefWidth="596.0">
+            	    <Label fx:id="medication_log_label" alignment="TOP_CENTER" layoutY="8.0" prefHeight="718.0" prefWidth="596.0" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>

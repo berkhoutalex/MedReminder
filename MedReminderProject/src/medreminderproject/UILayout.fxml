@@ -36,7 +36,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <Label fx:id="medication_info_label" layoutX="14.0" layoutY="-332.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time">
+            <Label fx:id="medication_info_label" alignment="TOP_CENTER" layoutX="-3.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font></Label>
@@ -44,7 +44,7 @@
         </AnchorPane>
 	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
                <children>
-            	    <Label fx:id="medication_log_label" layoutY="-324.0" prefHeight="718.0" prefWidth="596.0">
+            	    <Label fx:id="medication_log_label" alignment="TOP_CENTER" layoutY="8.0" prefHeight="718.0" prefWidth="596.0" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
