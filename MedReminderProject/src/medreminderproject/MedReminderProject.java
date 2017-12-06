@@ -163,21 +163,44 @@ public class MedReminderProject extends Application {
     }
   }
 
+  @SuppressWarnings("unchecked")
   public static void update_medication_log_label() {
-    String text = "Medication Log:\n";
+    List<String> list = new ArrayList<String>();
     for (int i = 0; i < medication_log.size(); i++) {
       Medication_Log_Entry e = medication_log.get(i);
-      text += String.format("'%s' was taken at %02d:%02d on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
+      String text = String.format("'%s' was taken at %02d:%02d on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
+      list.add(text);
     }
-    control.medication_log_label.setText(text);
+    control.medication_log_observable_list.setAll(list);
+    control.medication_log_list.setItems(control.medication_log_observable_list);
   }
+
+  /*
+<Label fx:id="medication_log_label" alignment="TOP_CENTER" layoutY="8.0" prefHeight="718.0" prefWidth="596.0" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+   */
+
+  /*
+            <ListView fx:id="medication_info_label" alignment="TOP_CENTER" layoutX="-3.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font></ListView>
+   */
+  @SuppressWarnings("unchecked")
   public static void update_medication_info_label() {
-    String text = "Reminders List:\n";
+    List<String> list = new ArrayList<String>();
     for (int i = 0; i < reminders.size(); i++) {
       Reminder r = reminders.get(i);
-      text += String.format("%s to be taken every %02d:%02d starting at %02d:%02d, %d times daily\n", r.medicine_name, r.interval_hours, r.interval_minutes, r.start_time_hours, r.start_time_minutes, r.num_times_a_day);
+      if (r.temporary) continue;
+      String text = String.format("%s to be taken every %d hours and %d minutes starting at %02d:%02d %s, %d times daily\n", r.medicine_name, r.interval_hours, r.interval_minutes, r.start_time_hours > 12 ? r.start_time_hours - 12 : r.start_time_hours, r.start_time_minutes, r.start_time_hours >= 12 ? "PM" : "AM", r.num_times_a_day);
+      list.add(text);
     }
-    control.medication_info_label.setText(text);
+    
+    control.medication_reminders_observable_list.setAll(list);
+    control.medication_reminder_list.setItems(control.medication_reminders_observable_list);
   }
 
   public static void only_allow_numberic_input_for_text_field(TextField text_field) {
@@ -189,7 +212,36 @@ public class MedReminderProject extends Application {
         }
       });
   }
+
+  public static boolean set_reminder_by_ui(Reminder r) {
+    if (control.num_times_a_day_field.getText().equals("") ||
+        control.start_time_hours_field.getText().equals("") ||
+        control.start_time_minutes_field.getText().equals("") ||
+        control.interval_hours_field.getText().equals("") ||
+        control.interval_minutes_field.getText().equals("")) {
+      //@TODO: Maybe an error sound here or something
+      return false;
+    }
+    r.medicine_name = control.medication_name_field.getText();
+    r.num_times_a_day = Integer.parseInt(control.num_times_a_day_field.getText());
+    r.start_time_hours = Integer.parseInt(control.start_time_hours_field.getText());
+    r.start_time_minutes = Integer.parseInt(control.start_time_minutes_field.getText());
+    while (r.start_time_minutes >= 60) {
+      r.start_time_minutes -= 60;
+      r.start_time_hours++;
+    }
+    if (control.start_time_pm_checkbox.isSelected()) r.start_time_hours += 12;
+
+    r.interval_hours = Integer.parseInt(control.interval_hours_field.getText());
+    r.interval_minutes = Integer.parseInt(control.interval_minutes_field.getText());
+    while (r.interval_minutes >= 60) {
+      r.interval_minutes -= 60;
+      r.interval_hours++;
+    }
+    return true;
+  }
   
+  @SuppressWarnings("unchecked")
   @Override
   public void start(Stage stage) throws Exception {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("UILayout.fxml"));
@@ -199,57 +251,53 @@ public class MedReminderProject extends Application {
     control.add_reminder_button.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-          if (control.num_times_a_day_field.getText().equals("") ||
-              control.start_time_hours_field.getText().equals("") ||
-              control.start_time_minutes_field.getText().equals("") ||
-              control.interval_hours_field.getText().equals("") ||
-              control.interval_minutes_field.getText().equals("")) {
-            //@TODO: Maybe an error sound here or something
-            return;
-          }
           Reminder r = new Reminder();
-          r.medicine_name = control.medication_name_field.getText();
-          r.num_times_a_day = Integer.parseInt(control.num_times_a_day_field.getText());
-          r.start_time_hours = Integer.parseInt(control.start_time_hours_field.getText());
-          r.start_time_minutes = Integer.parseInt(control.start_time_minutes_field.getText());
-          while (r.start_time_minutes >= 60) {
-            r.start_time_minutes -= 60;
-            r.start_time_hours++;
-          }
-          if (control.start_time_pm_checkbox.isSelected()) r.start_time_hours += 12;
-
-          r.interval_hours = Integer.parseInt(control.interval_hours_field.getText());
-          r.interval_minutes = Integer.parseInt(control.interval_minutes_field.getText());
-          while (r.interval_minutes >= 60) {
-            r.interval_minutes -= 60;
-            r.interval_hours++;
-          }
-          
+          if (!set_reminder_by_ui(r)) return;
           reminders.add(r);
           update_medication_info_label();
           save_all_data();
         }
         });
 
-    control.remove_reminder_by_name_button.setOnAction(new EventHandler<ActionEvent>() {
+    control.remove_selected_reminder_button.setOnAction(new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {
-          String name = control.medication_name_field.getText();
-          boolean reminder_removed = false;
-          for (int i = 0; i < reminders.size(); i++) {
-            if (reminders.get(i).medicine_name.equals(name)) {
-              dialog_box_already_shown.remove(i);
-              reminders.remove(i);
-              reminder_removed = true;
-              i--;
-            }
-          }
-          if (reminder_removed) {
-            update_medication_info_label();
-            save_all_data();
-          }
+          int index = control.medication_reminder_list.getSelectionModel().getSelectedIndex();
+          if (index < 0 || index >= reminders.size()) return;
+          dialog_box_already_shown.remove(index);
+          reminders.remove(index);
+          update_medication_info_label();
+          save_all_data();
         }
       });
+    control.edit_selected_reminder_button.setOnAction(new EventHandler<ActionEvent>() {
+        @Override
+        public void handle(ActionEvent event) {
+          int index = control.medication_reminder_list.getSelectionModel().getSelectedIndex();
+          if (index < 0 || index >= reminders.size()) return;
+          Reminder r = reminders.get(index);
+          if (!set_reminder_by_ui(r)) return;
+          dialog_box_already_shown.set(index, false);
+          update_medication_info_label();
+          save_all_data();
+        }
+      });
+
+    control.medication_reminder_list.getSelectionModel().selectedItemProperty()
+      .addListener(new ChangeListener<String>() {
+          public void changed(ObservableValue<? extends String> observable,
+                              String oldValue, String newValue) {
+            int index = control.medication_reminder_list.getSelectionModel().getSelectedIndex();
+            if (index < 0 || index >= reminders.size()) return;
+            Reminder r = reminders.get(index);
+            control.interval_hours_field.setText("" + r.interval_hours);
+            control.interval_minutes_field.setText("" + r.interval_minutes);
+            control.start_time_hours_field.setText("" + r.start_time_hours);
+            control.start_time_minutes_field.setText("" + r.start_time_minutes);
+            control.num_times_a_day_field.setText("" + r.num_times_a_day);
+            control.medication_name_field.setText("" + r.medicine_name);
+          }
+        });
 
     only_allow_numberic_input_for_text_field(control.interval_hours_field);
     only_allow_numberic_input_for_text_field(control.interval_minutes_field);

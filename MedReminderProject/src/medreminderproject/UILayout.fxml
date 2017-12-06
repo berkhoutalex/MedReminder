@@ -1,56 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1550.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="medreminderproject.Controller">
+<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="1550.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="medreminderproject.Controller">
   <children>
     <SplitPane dividerPositions="0.2280361757105943, 0.6098191214470284" prefHeight="938.0" prefWidth="1118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <Button fx:id="add_reminder_button" layoutX="33.0" layoutY="600.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="255.0" text="Add Reminder">
+            <Button fx:id="add_reminder_button" layoutX="16.0" layoutY="425.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="302.0" text="Add New Reminder">
               <font>
-                <Font size="24.0" />
+                <Font size="20.0" fx:id="x1" />
               </font>
             </Button>
-	    <Button fx:id="remove_reminder_by_name_button" layoutX="33.0" layoutY="690.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="255.0" text="Remove Reminder By Name">
+            <Button fx:id="edit_selected_reminder_button" font="$x1" layoutX="16.0" layoutY="521.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="302.0" text="Edit Selected Reminder" />
+            <Button fx:id="remove_selected_reminder_button" font="$x1" layoutX="16.0" layoutY="624.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="302.0" text="Remove Selected Reminder" />
+            <TextField fx:id="start_time_hours_field" layoutX="16.0" layoutY="237.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
+            <TextField fx:id="interval_hours_field" layoutX="16.0" layoutY="346.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
+            <TextField fx:id="interval_minutes_field" layoutX="179.0" layoutY="346.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
+            <TextField fx:id="start_time_minutes_field" layoutX="179.0" layoutY="237.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
+            <TextField fx:id="medication_name_field" layoutX="20.0" layoutY="70.0" prefHeight="65.0" prefWidth="294.0" promptText="Name of Medicine" text="" />
+            <Label layoutX="20.0" layoutY="221.0" text="Set Start Time:" />
+            <Label layoutX="20.0" layoutY="330.0" text="Set Interval:" />
+            <TextField fx:id="num_times_a_day_field" layoutX="20.0" layoutY="149.0" prefHeight="65.0" prefWidth="294.0" promptText="Number of Times a Day" text="" />
+            <CheckBox fx:id="start_time_pm_checkbox" layoutX="20.0" layoutY="302.0" text="PM" />
+            <Label alignment="TOP_CENTER" layoutX="72.0" layoutY="14.0" text="Reminder Edit:">
               <font>
-                <Font size="10.0" />
+                <Font size="25.0" fx:id="x2" />
               </font>
-            </Button>
-            <TextField fx:id="start_time_hours_field" layoutX="10.0" layoutY="350.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-            <TextField fx:id="interval_hours_field" layoutX="10.0" layoutY="513.0" prefHeight="65.0" prefWidth="155.0" promptText="Hours" text="" />
-            <TextField fx:id="interval_minutes_field" layoutX="175.0" layoutY="513.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
-            <TextField fx:id="start_time_minutes_field" layoutX="175.0" layoutY="350.0" prefHeight="65.0" prefWidth="135.0" promptText="Min" text="" />
-            <TextField fx:id="medication_name_field" layoutX="28.0" layoutY="95.0" prefHeight="65.0" prefWidth="286.0" promptText="Name of Medicine" text="" />
-            <Label layoutX="20.0" layoutY="293.0" text="Set Start Time:" />
-            <Label layoutX="14.0" layoutY="465.0" text="Set Interval:" />
-            <TextField fx:id="num_times_a_day_field" layoutX="38.0" layoutY="179.0" prefHeight="65.0" prefWidth="255.0" promptText="Number of Times a Day" text="" />
-	    <CheckBox fx:id="start_time_pm_checkbox" layoutX="10.0" layoutY="420.0" text="PM" />
+            </Label>
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
           <children>
-            <Label fx:id="medication_info_label" alignment="TOP_CENTER" layoutX="-3.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font></Label>
+            <Label alignment="TOP_CENTER" font="$x2" layoutX="0.0" layoutY="10.0" prefHeight="40.0" prefWidth="582.0" text="Medication Reminders List:" />
+            <ListView fx:id="medication_reminder_list" layoutY="50.0" prefHeight="668.0" prefWidth="582.0" />
           </children>
         </AnchorPane>
-	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
-               <children>
-            	    <Label fx:id="medication_log_label" alignment="TOP_CENTER" layoutY="8.0" prefHeight="718.0" prefWidth="596.0" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-	</AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="720.0" prefWidth="100.0">
+          <children>
+            <Label alignment="TOP_CENTER" font="$x2" layoutX="0.0" layoutY="9.0" prefHeight="34.0" prefWidth="582.0" text="Medication Log:" />
+            <ListView fx:id="medication_log_list" layoutY="50.0" prefHeight="668.0" prefWidth="582.0" />
+          </children>
+        </AnchorPane>
       </items>
     </SplitPane>
   </children>
