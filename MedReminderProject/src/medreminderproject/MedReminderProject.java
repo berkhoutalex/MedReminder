@@ -168,27 +168,13 @@ public class MedReminderProject extends Application {
     List<String> list = new ArrayList<String>();
     for (int i = 0; i < medication_log.size(); i++) {
       Medication_Log_Entry e = medication_log.get(i);
-      String text = String.format("'%s' was taken at %02d:%02d on %02d-%02d-%d\n", e.medicine_name, e.hour, e.minute, e.month, e.day, e.year);
+      String text = String.format("'%s' was taken at %02d:%02d %s on %02d-%02d-%d\n", e.medicine_name, e.hour > 12 ? e.hour - 12 : e.hour, e.minute, e.hour > 12 ? "PM" : "AM", e.month, e.day, e.year);
       list.add(text);
     }
     control.medication_log_observable_list.setAll(list);
     control.medication_log_list.setItems(control.medication_log_observable_list);
   }
 
-  /*
-<Label fx:id="medication_log_label" alignment="TOP_CENTER" layoutY="8.0" prefHeight="718.0" prefWidth="596.0" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-   */
-
-  /*
-            <ListView fx:id="medication_info_label" alignment="TOP_CENTER" layoutX="-3.0" prefHeight="718.0" prefWidth="582.0" text="Sample Medication at Sample Time" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font></ListView>
-   */
   @SuppressWarnings("unchecked")
   public static void update_medication_info_label() {
     List<String> list = new ArrayList<String>();
