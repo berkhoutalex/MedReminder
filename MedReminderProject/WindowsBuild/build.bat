@@ -1,0 +1,17 @@
+@echo off
+
+set BASE_NAME=win32_main
+set PROGRAM_NAME="MedReminder"
+set USE_SDL=0
+
+set LIBPATHS= %WINDOWS_LIBPATHS% -LIBPATH:"modules/libraries" -LIBPATH:"modules"
+set INCLUDEPATHS= %WINDOWS_INCLUDEPATHS% -I "modules/libraries" -I "modules"
+set LIBFILES= User32.lib
+set DISABLED_WARNINGS= -wd4201 -wd4100 -wd4189 -wd4996 -wd4505 -wd4312
+set DEBUG_INFO= -Z7
+
+cl -EHsc -MT -nologo -Gm- -GR- -Ox -W3 -Fe%PROGRAM_NAME% -DDEBUG_MODE=0 -DDEBUG=0 -DNDEBUG=1 -DDEBUG_CONSOLE=0 %DISABLED_WARNINGS% -FC -EHa- %EXTRA_COMPILE_FLAGS% %DEBUG_INFO% %INCLUDEPATHS% %BASE_NAME%.cpp %LIBFILES% -link -opt:ref %LIBPATHS%
+rem -SUBSYSTEM:WINDOWS,5.02
+
+del %PROGRAM_NAME%.pdb
+del %BASE_NAME%.obj

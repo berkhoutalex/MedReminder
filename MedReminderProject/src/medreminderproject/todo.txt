@@ -1,5 +1,0 @@
---------------TODOS--------------------
--Clean up the current ui.
--Be able to remove log entries (maybe)
--Don't use military time on the log.
--Consider adding lables for each text field in the reminder edit panel.
